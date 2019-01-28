@@ -10,7 +10,16 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+use App\User;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('test',function (){
+//    $role = Role::create(['name' => 'update']);
+//    $permission = Permission::create(['name' => 'edit articles']);
+    $user=User::find(1);
+    $user->givePermissionTo('edit articles');
+    dd(123);
 });
