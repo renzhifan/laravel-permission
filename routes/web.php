@@ -14,12 +14,25 @@ use App\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 Route::get('/', function () {
+
+    $user=User::find(1);
+    $user->assignRole('writer');
+    \Auth::login($user);
     return view('welcome');
 });
-Route::get('test',function (){
+Route::group(['middleware' => ['role:writer']], function () {
+    Route::get('test',function (){
 //    $role = Role::create(['name' => 'update']);
 //    $permission = Permission::create(['name' => 'edit articles']);
-    $user=User::find(1);
-    $user->givePermissionTo('edit articles');
-    dd(123);
+        $role=Role::find(1);
+        $role->givePermissionTo('edit articles');
+        dd(122);
+        $user=User::find(1);
+        $user->givePermissionTo('edit articles');
+        dd(123);
+    });
+    Route::get('t',function (){
+       dd(111);
+    })->middleware('permission:edit articles');
 });
+
