@@ -22,6 +22,12 @@ Route::get('/', function () {
 });
 Route::group(['middleware' => ['role:writer']], function () {
     Route::get('test',function (){
+        $app = app();
+        $routes = $app->routes->getRoutes();
+        foreach ($routes as $k=>$value){
+            $path[$k]['uri'] = $value->uri;
+        }
+        dd($path);
 //    $role = Role::create(['name' => 'update']);
 //    $permission = Permission::create(['name' => 'edit articles']);
         $role=Role::find(1);
