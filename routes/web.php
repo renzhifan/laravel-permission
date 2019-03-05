@@ -16,22 +16,22 @@ use Spatie\Permission\Models\Permission;
 Route::get('/', function () {
 
     $user=User::find(1);
-    $user->assignRole('writer');
+//    $user->assignRole('writer');
     \Auth::login($user);
     return view('welcome');
 });
-Route::group(['middleware' => ['role:writer']], function () {
+Route::group(['middleware' => ['role_or_permission:edit articles']], function () {
     Route::get('test',function (){
-        $app = app();
+        /*$app = app();
         $routes = $app->routes->getRoutes();
         foreach ($routes as $k=>$value){
             $path[$k]['uri'] = $value->uri;
         }
-        dd($path);
+        dd($path);*/
 //    $role = Role::create(['name' => 'update']);
 //    $permission = Permission::create(['name' => 'edit articles']);
-        $role=Role::find(1);
-        $role->givePermissionTo('edit articles');
+       /* $role=Role::find(1);
+        $role->givePermissionTo('edit articles');*/
         dd(122);
         $user=User::find(1);
         $user->givePermissionTo('edit articles');
